@@ -245,3 +245,5 @@ public class ImageEnhancer extends Component implements ActionListener {
 	    return b;
 	}
 }
+
+
