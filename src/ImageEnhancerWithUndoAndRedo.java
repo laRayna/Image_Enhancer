@@ -129,8 +129,11 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
      sharpening_op = new ConvolveOp(new Kernel(3, 3, highPass),
        ConvolveOp.EDGE_NO_OP, null);
     }
+    
+    BufferedImageStack undoStack = new BufferedImageStack();
+    BufferedImageStack redoStack = new BufferedImageStack();
 
-    public ImageEnhancer() {
+    public ImageEnhancerWithUndoAndRedo() {
      createMenu();
      setUpImageTransformations();
         try {
@@ -147,6 +150,9 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
         
         //  Students: Add code to create empty stack instances for the Undo stack 
         	//and the Redo stack, and put your code for this here:
+       
+        
+
         
     }
 
@@ -178,7 +184,7 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
     public void actionPerformed(ActionEvent e) {
         //  Students: Add code in this method to save the current buffered image for
         	//undoing and dispose of any redoable actions.
-        
+        undoStack.push(copyImage());
         //  Also add code to enable and disable the Undo and Redo menu items, and to process
         //  these items when the user selects them.
 
@@ -226,8 +232,8 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
      //  Students: Uncomment this code that prints out the numbers of elements
      	// in each of the two stacks (Undo and Redo):
         
-        //System.out.println("The Undo stack contains " + undoStack.getSize() + " elements.");
-        //System.out.println("The Redo stack contains " + redoStack.getSize() + " elements.");
+        System.out.println("The Undo stack contains " + undoStack.getSize() + " elements.");
+        System.out.println("The Redo stack contains " + redoStack.getSize() + " elements.");
     }
     
     //To make sure we are actually assigning the values of our BufferedImages instead of
