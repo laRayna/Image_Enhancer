@@ -47,6 +47,8 @@ public class ImageEnhancer extends Component implements ActionListener {
 
     //  Students: Here, you should declare two variables to hold instances
     	//of your stack class, with one for Undo and one for Redo.
+    BufferedImage[] undo;
+    BufferedImage[] redo;
     
 
     // A 3x3 filtering kernel for high-pass filtering:
@@ -152,6 +154,8 @@ public class ImageEnhancer extends Component implements ActionListener {
         
         //  Students: Add code to create empty stack instances for the Undo stack 
         	//and the Redo stack, and put your code for this here:
+        undo = new BufferedImage[2];
+        redo = new BufferedImage[2];
         
     }
 
@@ -188,6 +192,8 @@ public class ImageEnhancer extends Component implements ActionListener {
         //  these items when the user selects them.
 
      //System.out.println("The actionEvent is "+e); // This can be useful when debugging.
+    	
+    
      if (e.getSource()==exitItem) { System.exit(0); }
      if (e.getSource()==blurItem) { blur(); }
      if (e.getSource()==sharpenItem) { sharpen(); }

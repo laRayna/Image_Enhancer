@@ -43,6 +43,9 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
     //  Students: Here, you should declare two variables to hold instances
     	//of your stack class, with one for Undo and one for Redo.
     
+    BufferedImageStack undoStack;
+    BufferedImageStack redoStack;
+    
 
     // A 3x3 filtering kernel for high-pass filtering:
     public static final float[] highPass = {
@@ -129,9 +132,7 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
      sharpening_op = new ConvolveOp(new Kernel(3, 3, highPass),
        ConvolveOp.EDGE_NO_OP, null);
     }
-    
-    BufferedImageStack undoStack = new BufferedImageStack();
-    BufferedImageStack redoStack = new BufferedImageStack();
+
 
     public ImageEnhancerWithUndoAndRedo() {
      createMenu();
@@ -150,6 +151,9 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
         
         //  Students: Add code to create empty stack instances for the Undo stack 
         	//and the Redo stack, and put your code for this here:
+        undoStack  = new BufferedImageStack();
+        redoStack  = new BufferedImageStack();
+  
        
         
 
@@ -184,10 +188,21 @@ public class ImageEnhancerWithUndoAndRedo extends Component implements ActionLis
     public void actionPerformed(ActionEvent e) {
         //  Students: Add code in this method to save the current buffered image for
         	//undoing and dispose of any redoable actions.
-        undoStack.push(copyImage());
+      undoStack.push(copyImage(biWorking));
         //  Also add code to enable and disable the Undo and Redo menu items, and to process
         //  these items when the user selects them.
-
+     if(e.getSource()==undoItem) {
+    	 biWorking = undoStack.get(undoStack.getSize()-1);
+    	 redoStack.push(undoStack.get(undoStack.getSize()-1));
+    	 undoStack.pop();
+    	 
+     }
+     if(e.getSource()==redoItem) {
+    	 biWorking = redoStack.get(redoStack.getSize()-1);
+    	 undoStack.push(redoStack.get(redoStack.getSize()-1));
+    	 redoStack.pop();
+    	 
+     }
      //System.out.println("The actionEvent is "+e); // This can be useful when debugging.
      if (e.getSource()==exitItem) { System.exit(0); }
      if (e.getSource()==blurItem) { blur(); }
